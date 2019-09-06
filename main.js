@@ -77,16 +77,16 @@ var app = http.createServer(function(request,response){
             response.end(template);    
         });
     } else if (pathname === '/create_process') {
-        var body = '';
-        request.on('data', function(data){
-            body = body + data;
+        let body = ''; // data를 담을 body
+        request.on('data', data => { //post로 받은 데이터는 request 안에 있을 것임. data를 받을 떄 이 콜백함수를 실행하겠다는 뜻 
+          body = body + data; // data를 받는대로 body에 누적함
         });
-        request.on('end', function(){
-            var post = qs.parse(body);
-            var title = post.title;
-            var description = post.description
+        request.on('end', () => { // data전송이 끝나면 이 콜백함수를 실행하겠다는 뜻
+            const post = qs.parse(body); // 받아둔 body를 parse해서 post에 넣음
+            const title = post.title;
+            const description = post.description
             fs.writeFile(`data/${title}`, description, 'utf8', (err) => {
-                response.writeHead(200);
+                response.writeHead(302, {Location: `/?id=${title}`});
                 response.end("success");           
             });
         });
