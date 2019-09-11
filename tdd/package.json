@@ -8,7 +8,8 @@
     "morgan": "^1.9.1"
   },
   "devDependencies": {
-    "mocha": "^6.2.0"
+    "mocha": "^6.2.0",
+    "should": "^13.2.3"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
