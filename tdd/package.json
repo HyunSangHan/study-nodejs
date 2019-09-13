@@ -9,7 +9,8 @@
   },
   "devDependencies": {
     "mocha": "^6.2.0",
-    "should": "^13.2.3"
+    "should": "^13.2.3",
+    "supertest": "^4.0.2"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
