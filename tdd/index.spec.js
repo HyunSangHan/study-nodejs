@@ -66,6 +66,29 @@ describe('GET /users 1는', () => {
     })
 });
 
+describe('POST /users는', () => {
+    describe('성공 시', () => {
+        let name = 'hyunsang'
+        let body;
+        before(done => { // 중복되는 부분은 이렇게 before에서 처리해주면 된다.
+            request(app)
+            .post('/users')
+            .send({name})
+            .expect(201)
+            .end((err, res) => {
+                body = res.body;
+                done();
+            })
+        })
+        it ('생성된 유저객체를 반환한다', () => {
+            body.should.have.property('id')
+        })
+        it ('입력한 name을 반환한다', () => {
+            body.should.have.property('name', name)
+        })
+    });
+});
+
 describe('DELETE /users 1는', () => {
     describe('성공시', () => {
         it('204를 응답한다', (done) => {
