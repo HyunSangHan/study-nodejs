@@ -1,14 +1,17 @@
 var express = require('express');
 var app = express();
+var bodyParser = require('body-parser');
 
 var morgan = require('morgan');
 var users = [
     {id: 1, name: 'marco'},
     {id: 2, name: 'anna'},
-    {id: 3, name: 'egoing'},
+    {id: 3, name: 'kim'},
 ];
 
-app.use(morgan('dev'));
+app.use(morgan('dev')); //middleware를 사용할 때에는 use를 쓴다.
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/users', function(req, res) {
     req.query.limit = req.query.limit || 10;
@@ -32,6 +35,15 @@ app.delete('/users/:id', (req, res) => {
     if (Number.isNaN(id)) return res.status(400).end();
     users = users.filter(user => user.id !== id)[0];
     res.status(204).end();
+})
+
+app.post('/users', (req, res) => {
+    //원래 express는 body를 지원하지 않으므로 bodyParser를 미들웨어로 추가해줘야 쓸 수 있게 된다.
+    const name = req.body.name;
+    const id = Date.now();
+    const user = {id, name};
+    users.push(user);
+    res.status(201).json(user);
 })
 
 app.listen(3000, function () {
