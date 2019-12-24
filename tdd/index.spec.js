@@ -87,6 +87,22 @@ describe('POST /users는', () => {
             body.should.have.property('name', name)
         })
     });
+    describe('실패 시', () => {
+        it ('name 파라미터 누락 시 400을 응답한다', (done) => {
+            request(app)
+                .post('/users')
+                .send({})
+                .expect(400)
+                .end(done);
+        })
+        it ('중복된 name인 경우 409를 응답한다', (done) => {
+            request(app)
+            .post('/users')
+            .send({name: 'marco'})
+            .expect(409)
+            .end(done);
+        })
+    })
 });
 
 describe('DELETE /users 1는', () => {
