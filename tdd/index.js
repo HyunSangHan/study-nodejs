@@ -51,7 +51,10 @@ app.post('/users', (req, res) => {
 app.put('/users/:id', (req, res) => {
     const id = parseInt(req.params.id, 10)
     const name = req.body.name;
+    if (!name || Number.isNaN(id)) return res.status(400).end();
     const user = users.filter(user => user.id === id)[0];
+    if (!user) return res.status(404).end();
+    if (users.filter(user => user.name === name).length > 0) return res.status(409).end();
     user.name = name;
     res.status(203).json(user);
 })

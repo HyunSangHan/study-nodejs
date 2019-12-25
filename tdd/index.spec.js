@@ -107,7 +107,7 @@ describe('POST /users는', () => {
 
 describe('PUT /users/:id는', () => {
     describe('성공시', () => {
-        let name = 'hyunsang';
+        let name = 'christmas';
         let body;
         before(done => {
             request(app)
@@ -121,6 +121,36 @@ describe('PUT /users/:id는', () => {
         })
         it('변경된 name을 응답한다', () => {
             body.should.have.property('name', name)
+        })
+    });
+    describe('실패 시', () => {
+        it('정수가 아닌 id일 경우 400을 응답한다', done => {
+            request(app)
+            .put('/users/not-number')
+            .send({name: 'christmas'})
+            .expect(400)
+            .end(done)
+        })
+        it('name이 없을 경우 400을 응답한다', done => {
+            request(app)
+            .put('/users/1')
+            .send({})
+            .expect(400)
+            .end(done)
+        })
+        it('없는 유저일 경우 404를 응답한다', done => {
+            request(app)
+            .put('/users/0')
+            .send({name: 'christmas'})
+            .expect(404)
+            .end(done)
+        })
+        it('이름이 중복일 경우 409를 응답한다', done => {
+            request(app)
+            .put('/users/1')
+            .send({name: 'christmas'})
+            .expect(409)
+            .end(done)
         })
     })
 })
