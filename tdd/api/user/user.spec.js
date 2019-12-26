@@ -1,10 +1,12 @@
 const request = require('supertest');
 const should = require('should');
 const app = require('../../index'); // index는 생략해도 된다.
+const models = require('../../models');
 
 describe('GET /users는', () => {
     describe('성공 시', () => {
-        it('유저정보를 담은 객체를 반환한다', (done) => { //done은 콜백함수임
+        before(() => models.sequelize.sync({force: true}));
+        it.only('유저정보를 담은 객체를 반환한다', (done) => { //done은 콜백함수임
             request(app)
                 .get('/users')
                 .end((err, res) => {

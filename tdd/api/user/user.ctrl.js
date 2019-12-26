@@ -1,8 +1,4 @@
-var users = [
-    {id: 1, name: 'marco'},
-    {id: 2, name: 'anna'},
-    {id: 3, name: 'kim'},
-];
+const models = require('../../models');
 
 const index = function(req, res) {
     req.query.limit = req.query.limit || 10;
@@ -10,7 +6,10 @@ const index = function(req, res) {
     if (Number.isNaN(limit)) {
         return res.status(400).end();
     }
-    res.json(users.slice(0, limit));
+    models.User.findAll({}) // {}에 조건이 들어가면 되는데, 여기선 조건을 넣지 않았다.
+        .then(users => {
+            res.json(users);
+        })
 };
 
 const show = function(req, res) {
