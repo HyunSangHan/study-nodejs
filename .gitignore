@@ -88,5 +88,5 @@ typings/
 # DynamoDB Local files
 .dynamodb/
 
-
+**/db.sqlite
 .DS_Store
