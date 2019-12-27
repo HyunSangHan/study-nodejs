@@ -3,7 +3,7 @@ const should = require('should');
 const app = require('../../index'); // index는 생략해도 된다.
 const models = require('../../models');
 
-describe.only('GET /users는', () => {
+describe('GET /users는', () => {
     describe('성공 시', () => {
         const users = [
             {id: 1, name: 'marco'},
