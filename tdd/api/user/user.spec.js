@@ -47,7 +47,7 @@ describe('GET /users는', () => {
     })
 });
 
-describe('GET /users/:id는', () => {
+describe.only('GET /users/:id는', () => {
     describe('성공 시', () => {
         it ('id가 1인 유저객체를 반환한다', (done) => {
             request(app)
