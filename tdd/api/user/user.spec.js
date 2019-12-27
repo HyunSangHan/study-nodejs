@@ -74,7 +74,7 @@ describe('GET /users/:id는', () => {
     })
 });
 
-describe('POST /users는', () => {
+describe.only('POST /users는', () => {
     describe('성공 시', () => {
         let name = 'hyunsang'
         let body;
@@ -163,7 +163,7 @@ describe('PUT /users/:id는', () => {
     })
 })
 
-describe.only('DELETE /users 1는', () => {
+describe('DELETE /users 1는', () => {
     describe('성공시', () => {
         it('204를 응답한다', (done) => {
             request(app)

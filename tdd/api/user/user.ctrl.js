@@ -42,11 +42,16 @@ const create = (req, res) => {
     //원래 express는 body를 지원하지 않으므로 bodyParser를 미들웨어로 추가해줘야 쓸 수 있게 된다.
     const name = req.body.name;
     if (!name) return res.status(400).end();
-    if (users.filter(user => user.name === name).length > 0) return res.status(409).end();
-    const id = Date.now();
-    const user = {id, name};
-    users.push(user);
-    res.status(201).json(user);
+    models.User.create({ name })
+        .then(user => {
+            res.status(201).json(user);
+        })
+        .catch(err => {
+            if (err.name === 'SequelizeUniqueConstraintError') {
+                return res.status(409).end();
+            }
+            return res.status(500).end()
+        })
 };
 
 const update = (req, res) => {
