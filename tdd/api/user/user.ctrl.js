@@ -58,11 +58,23 @@ const update = (req, res) => {
     const id = parseInt(req.params.id, 10)
     const name = req.body.name;
     if (!name || Number.isNaN(id)) return res.status(400).end();
-    const user = users.filter(user => user.id === id)[0];
-    if (!user) return res.status(404).end();
-    if (users.filter(user => user.name === name).length > 0) return res.status(409).end();
-    user.name = name;
-    res.status(203).json(user);
+
+    // models.User.update를 써도 되지만 아래와 같이 findOne과 save()를 쓸 수도 있음
+    models.User.findOne({ where: { id } })
+        .then(user => {
+            if (!user) return res.status(404).end();
+            user.name = name;
+            user.save()
+                .then(() => {
+                    res.status(203).json(user);
+                })
+                .catch(err => {
+                    if (err.name = 'SequelizeUniqueConstraintError') {
+                        return res.status(409).end();
+                    }
+                    res.status(500).end();
+                })
+        })
 };
 
 module.exports = {

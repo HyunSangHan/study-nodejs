@@ -81,7 +81,7 @@ describe('GET /users/:id는', () => {
     })
 });
 
-describe.only('POST /users는', () => {
+describe('POST /users는', () => {
     const users = [
         {id: 1, name: 'marco'},
         {id: 2, name: 'anna'},
