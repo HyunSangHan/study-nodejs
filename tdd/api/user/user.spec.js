@@ -48,6 +48,13 @@ describe('GET /users는', () => {
 });
 
 describe('GET /users/:id는', () => {
+    const users = [
+        {id: 1, name: 'marco'},
+        {id: 2, name: 'anna'},
+        {id: 3, name: 'kim'},
+    ];
+    before(() => models.sequelize.sync({force: true}));
+    before(() => models.User.bulkCreate(users));
     describe('성공 시', () => {
         it ('id가 1인 유저객체를 반환한다', (done) => {
             request(app)
@@ -75,6 +82,13 @@ describe('GET /users/:id는', () => {
 });
 
 describe.only('POST /users는', () => {
+    const users = [
+        {id: 1, name: 'marco'},
+        {id: 2, name: 'anna'},
+        {id: 3, name: 'kim'},
+    ];
+    before(() => models.sequelize.sync({force: true}));
+    before(() => models.User.bulkCreate(users));
     describe('성공 시', () => {
         let name = 'hyunsang'
         let body;
@@ -114,6 +128,13 @@ describe.only('POST /users는', () => {
 });
 
 describe('PUT /users/:id는', () => {
+    const users = [
+        {id: 1, name: 'marco'},
+        {id: 2, name: 'anna'},
+        {id: 3, name: 'kim'},
+    ];
+    before(() => models.sequelize.sync({force: true}));
+    before(() => models.User.bulkCreate(users));
     describe('성공시', () => {
         let name = 'christmas';
         let body;
@@ -164,6 +185,13 @@ describe('PUT /users/:id는', () => {
 })
 
 describe('DELETE /users 1는', () => {
+    const users = [
+        {id: 1, name: 'marco'},
+        {id: 2, name: 'anna'},
+        {id: 3, name: 'kim'},
+    ];
+    before(() => models.sequelize.sync({force: true}));
+    before(() => models.User.bulkCreate(users));
     describe('성공시', () => {
         it('204를 응답한다', (done) => {
             request(app)
